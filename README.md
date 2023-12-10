@@ -1,1 +1,7 @@
-# E-commerce Back End Starter Code
+# E-commerce App
+
+## Description
+
+## Screenshot
+
+## Link
