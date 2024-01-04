@@ -48,25 +48,22 @@ router.post('/', async (req, res) => {
   }
 });
 
+
 router.put('/:id', async (req, res) => {
+
   try {
-    // update a tag's name by its `id` value
-    const [rowsUpdated, [updatedTag]] = await Tag.update(req.body, {
+
+    const updatedTag = await Tag.update(req.body, {
       where: {
         id: req.params.id,
       },
-      returning: true, // return the updated record
-    });
-
-    if (rowsUpdated === 0) {
-      res.status(404).json({ message: 'Tag not found' });
-      return;
-    }
-
+      returning: true,
+    })
     res.status(200).json(updatedTag);
-  } catch (err) {
-    console.error(err);
-    res.status(400).json(err);
+
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ message: 'Bad Request', error: error.message });
   }
 });
 
@@ -84,7 +81,8 @@ router.delete('/:id', async (req, res) => {
       return;
     }
 
-    res.status(204).end();
+    res.status(200).json({ message: 'Category deleted successfully' });
+    
   } catch (err) {
     console.error(err);
     res.status(500).json(err);

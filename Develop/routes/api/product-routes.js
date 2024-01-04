@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
-// The `/api/products` endpoint
+//the api/products endpoint
 
 // get all products
 router.get('/', async (req, res) => {
@@ -79,38 +79,16 @@ router.post('/', async (req, res) => {
 });
 
 // update product
+
 router.put('/:id', async (req, res) => {
   try {
     // update product data
-    const [rowsUpdated, [updatedProduct]] = await Product.update(req.body, {
+    const updatedProduct = await Product.update(req.body, {
       where: {
         id: req.params.id,
       },
       returning: true, // return the updated record
-    });
-
-    if (rowsUpdated === 0) {
-      res.status(404).json({ message: 'Product not found' });
-      return;
-    }
-
-    // update product tags
-    if (req.body.tagIds && req.body.tagIds.length) {
-      const productTags = await ProductTag.findAll({
-        where: { product_id: req.params.id },
-      });
-
-      const currentTagIds = productTags.map(({ tag_id }) => tag_id);
-
-      const newTagIds = req.body.tagIds.filter((tag_id) => !currentTagIds.includes(tag_id));
-
-      const removedTagIds = currentTagIds.filter((tag_id) => !req.body.tagIds.includes(tag_id));
-
-      await Promise.all([
-        ProductTag.destroy({ where: { id: removedTagIds } }),
-        ProductTag.bulkCreate(newTagIds.map((tag_id) => ({ product_id: req.params.id, tag_id }))),
-      ]);
-    }
+    })
 
     res.status(200).json(updatedProduct);
   } catch (err) {
@@ -118,6 +96,7 @@ router.put('/:id', async (req, res) => {
     res.status(400).json(err);
   }
 });
+
 
 // delete one product by its `id` value
 router.delete('/:id', async (req, res) => {
@@ -133,7 +112,8 @@ router.delete('/:id', async (req, res) => {
       return;
     }
 
-    res.status(204).end();
+    res.status(200).json({ message: 'Category deleted successfully' });
+
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
