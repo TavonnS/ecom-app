@@ -6,4 +6,4 @@ This is the back-end or server side part of a sample e-commerce app.  It is a da
 The starter code material is found here: [Starter Code](https://github.com/coding-boot-camp/fantastic-umbrella)
 
 ## Link to Video
-[VIDEO LINK](---)
+[VIDEO LINK](https://drive.google.com/file/d/1UUI5-Rumy3dqhukTUA811MbSytfi_Cy8/view)

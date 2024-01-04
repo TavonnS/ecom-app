@@ -91,6 +91,9 @@ router.put('/:id', async (req, res) => {
     })
 
     res.status(200).json(updatedProduct);
+
+    // or add a message here
+    
   } catch (err) {
     console.error(err);
     res.status(400).json(err);
